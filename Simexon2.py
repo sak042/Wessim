@@ -20,9 +20,9 @@ def subprogram(command, name):
 def main(argv):
 	t0 = time()
 	arguline = " ".join(argv)
-	parser = argparse.ArgumentParser(description='Simexon2: Exome capture simulator (Probe-based version)', prog='Simexon', formatter_class=argparse.RawTextHelpFormatter)
+	parser = argparse.ArgumentParser(description='Simexon2: Exome capture simulator (Probe-based version)', prog='Simexon2, formatter_class=argparse.RawTextHelpFormatter)
 	group1 = parser.add_argument_group('Mandatory input files')
-	group1.add_argument('-R', metavar = 'FILE', dest='reference', required=True, help='(R)eference genome FASTA file')
+	group1.add_argument('-R', metavar = 'FILE', dest='reference', required=True, help='faidx-indexed (R)eference genome FASTA file')
 	group1.add_argument('-P', metavar = 'FILE', dest='probe', required=True, help='(P)robe sequence FASTA file')
 	group1.add_argument('-B', metavar = 'FILE', dest='probeblat', required=True, help='(B)lat matched probe regions .PSL file')
 
@@ -95,7 +95,7 @@ def main(argv):
 	for t in range(0, threadnumber):
 		readstart = int(float(readnumber) / float(threadnumber) * t) + 1
 		readend = int(float(readnumber) / float(threadnumber) * (t+1))
-		command = "python __sub_simexon.py " + arguline + " -1 " + str(readstart) + " -2 " + str(readend) + " -i " + str(t+1)
+		command = "python __sub_simexon2.py " + arguline + " -1 " + str(readstart) + " -2 " + str(readend) + " -i " + str(t+1)
 		p = Process(target=subprogram, args=(command, t+1))
 		p.start()
 		processes.append(p)

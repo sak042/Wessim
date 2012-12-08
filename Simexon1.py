@@ -10,6 +10,7 @@ import argparse
 from multiprocessing import Process
 import os
 import math
+import pysam
 
 inds={'A':0,'T':1,'G':2,'C':3,'N':4,'a':0,'t':1,'g':2,'c':3,'n':4}
 
@@ -20,11 +21,10 @@ def subprogram(command, name):
 def main(argv):
 	t0 = time()
 	arguline = " ".join(argv)
-	parser = argparse.ArgumentParser(description='Simexon: Exome capture simulator (Probe-based version)', prog='Simexon', formatter_class=argparse.RawTextHelpFormatter)
+	parser = argparse.ArgumentParser(description='Simexon1: Exome capture simulator (Ideal target region-based version)', prog='Simexon1', formatter_class=argparse.RawTextHelpFormatter)
 	group1 = parser.add_argument_group('Mandatory input files')
-	group1.add_argument('-R', metavar = 'FILE', dest='reference', required=True, help='(R)eference genome FASTA file')
-	group1.add_argument('-P', metavar = 'FILE', dest='probe', required=True, help='(P)robe sequence FASTA file')
-	group1.add_argument('-B', metavar = 'FILE', dest='probeblat', required=True, help='(B)lat matched probe regions .PSL file')
+	group1.add_argument('-R', metavar = 'FILE', dest='reference', required=True, help='faidx-indexed (R)eference genome FASTA file')
+	group1.add_argument('-B', metavar = 'FILE', dest='region', required=True, help='Target region .(B)ED file')
 
 	group2 = parser.add_argument_group('Parameters for exome capture')
 	group2.add_argument('-f', metavar = 'INT', type=int, dest='fragsize', required=False, help='mean (f)ragment size. this corresponds to insert size when sequencing in paired-end mode. [200]', default=200)
@@ -47,8 +47,9 @@ def main(argv):
 
 	args = parser.parse_args()
 	reffile = args.reference
-	probefile = args.probe
-	alignfile = args.probeblat
+	regionfile = args.region
+	getRegionVector(reffile, regionfile)
+	sys.exit(0)
 	
 	isize = args.fragsize
 	isd = args.fragsd
@@ -59,6 +60,7 @@ def main(argv):
 	readlength = args.readlength
 	readnumber = args.readnumber		
 	threadnumber = args.threadnumber
+	
 	if imin==None:
 		if paired:
 			imin = readlength + 20
@@ -95,7 +97,7 @@ def main(argv):
 	for t in range(0, threadnumber):
 		readstart = int(float(readnumber) / float(threadnumber) * t) + 1
 		readend = int(float(readnumber) / float(threadnumber) * (t+1))
-		command = "python __sub_simexon.py " + arguline + " -1 " + str(readstart) + " -2 " + str(readend) + " -i " + str(t+1)
+		command = "python __sub_simexon1.py " + arguline + " -1 " + str(readstart) + " -2 " + str(readend) + " -i " + str(t+1)
 		p = Process(target=subprogram, args=(command, t+1))
 		p.start()
 		processes.append(p)
@@ -163,7 +165,35 @@ def main(argv):
 		wread.close()
 		wread2.close()
 	sys.exit(0)
-	
+
+def getRegionVector(fastafile, regionfile):
+	print "Generating fasta file for given regions..."
+	faoutfile = regionfile + ".fa"
+	abdoutfile = regionfile + ".abd"
+	ref = pysam.Fastafile(fastafile)
+	f = open(regionfile)
+	wfa = open(faoutfile, 'w')
+	wabd = open(abdoutfile, 'w')
+	i = f.readline()
+	abd = 0
+	while i:
+		i = f.readline()
+		values = i.split("\t")
+		if i.startswith("#") or len(values)<3:
+			continue
+		chrom = values[0]
+		start = int(values[1])
+		end = int(values[2])
+		header = ">" + chrom + "_" + str(start) + "_" + str(end)
+		x = ref.fetch(chrom, start, end)
+		length = len(x)
+		abd += length
+		wfa.write(header + "\n")
+		wfa.write(x + "\n")
+		wabd.write(str(abd) + "\n")
+	f.close()
+	wfa.close()
+	wabd.close()
 	
 if __name__=="__main__":
 	main(sys.argv[1:])

@@ -13,7 +13,7 @@ inds={'A':0,'T':1,'G':2,'C':3,'N':4,'a':0,'t':1,'g':2,'c':3,'n':4}
 
 def main(argv):
 	t0 = time()
-	parser = argparse.ArgumentParser(description='Simexon: Exome capture simulator (Probe-based version)', prog='Simexon', formatter_class=argparse.RawTextHelpFormatter)
+	parser = argparse.ArgumentParser(description='sub-simexon: a sub-program for Simexon2. (NOTE!) Do not run this program. Use "Simexon2.py" instead. ', prog='Simexon', formatter_class=argparse.RawTextHelpFormatter)
 	group1 = parser.add_argument_group('Mandatory input files')
 	group1.add_argument('-R', metavar = 'FILE', dest='reference', required=True, help='(R)eference genome FASTA file')
 	group1.add_argument('-P', metavar = 'FILE', dest='probe', required=True, help='(P)robe sequence FASTA file')
