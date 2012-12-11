@@ -75,18 +75,30 @@
 
 <ol>
 <li>
-<strong>Ideal targets</strong>: In ideal target mode, you will provide a list of genomic coordinates in a BED  file (e.g. chr1   798833 799125). Ideal targets of major exome capture platforms are freely available from vendor's website. For Agilent's SureSelect platforms, go to <a href="https://earray.chem.agilent.com/suredesign/">https://earray.chem.agilent.com/suredesign/</a> , For NimbleGen's SeqCap go to <a href="http://www.nimblegen.com/products/seqcap/index.html">http://www.nimblegen.com/products/seqcap/index.html</a> and find BED files under Design and Annotation Files. </li>
+<strong>Ideal targets</strong>: In ideal target mode, you will provide a list of genomic coordinates in a BED  file (e.g. chr1   798833 799125). Ideal targets of major exome capture platforms are freely available from vendor's website. For Agilent's SureSelect platforms, go to <a href="https://earray.chem.agilent.com/suredesign/">https://earray.chem.agilent.com/suredesign/</a> . You must register at their site. After logging in, go to Find Designs and select Agilent Catalog at the menu tab. You will be able to download all information of currently available platforms including ideal target BED files and probe sequence text files.   For NimbleGen's SeqCap go to <a href="http://www.nimblegen.com/products/seqcap/index.html">http://www.nimblegen.com/products/seqcap/index.html</a> and find BED files under Design and Annotation Files. </li>
 <li>
-<strong>Probe sequences</strong>: Probe sequences are available for SureSelect platforms in the SureDesign homepage (<a href="https://earray.chem.agilent.com/suredesign/">https://earray.chem.agilent.com/suredesign/</a>). You must register at their site. After loggin in, go to Find Designs and select Agilent Catalog at the menu tab. You will be able to download all information of currently available platforms including ideal target BED files and probe sequence text files.<br>
-</li>
+<strong>Probe sequences</strong>: Probe sequences are available for SureSelect platforms in the SureDesign homepage (<a href="https://earray.chem.agilent.com/suredesign/">https://earray.chem.agilent.com/suredesign/</a>) (see above). Usually those files are named "[platform]_probe.txt"</li>
 </ol>
 </li>
 </ul><h3>Running Simexon</h3>
 
-<p>The basic synopsis of Simexon command is like below:</p>
+<p>The basic synopsis of Simexon1 is like below:</p>
 
 <pre><code>
+# Run Simexon1 in ideal target mode
 &gt;python Simexon1.py -R ref.fa -B target.bed -n 1000000 -l 100 -M model.gzip -z -o result
+</code></pre>
+
+<p>For Simexon2:</p>
+
+<pre><code>
+# Generate a FASTA file of probe sequence
+&gt;python Prep_Probe2Fa.py probe.txt (this generates probe.txt.fa)
+# Establish your local blat server
+&gt;gfServer start -canStop localhost 6666 ref.2bit
+# Run blat search to generate the match list 
+&gt;python Prep_BlatSearch.py ref.2bit probe.txt.fa probe.txt.fa.psl
+# Run Simexon2 in probe hybridization mode.
 &gt;python Simexon2.py -R ref.fa -P probe.txt.fa -B probe_match.txt.fa.psl -n 1000000 -l 76 -M model.gzip -pz -o result2
 </code></pre>
 
