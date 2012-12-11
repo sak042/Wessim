@@ -62,20 +62,10 @@
 
 <ul>
 <li>Sample genome sequence: This is a FASTA file (e.g. hg19.fa). The FASTA file must be faidx indexed. </li>
-<li>Target region information:</li>
-</ul><p>To run <strong>Simexon</strong>, the followings are required.</p>
-
-<h4>Input</h4>
+<li>Target region information: Target regions can be specified by two different ways. 
 
 <ul>
-<li>
-<em>sample genome</em>: a faidx indexed FASTA format file of your sample genome sequence (e.g. hg19.fa).</li>
-<li>
-<em>target regions</em>: a set of designated genomic regions in either of the below formats:
-
-<ul>
-<li>ideal targets: a set of genomic coordinates <em>(chromosome, start, end)</em> in a tab-delimited BED file.</li>
-<li>probe sequences: </li>
+<li>Ideal target mode: In ideal target mode, you will provide a list of genomic coordinates in a BED file (e.g. chr1   798833 799125). Ideal targets of major exome capture platforms are freely available from vendor's website. For Agilent's SureSelect platforms, go to <a href="https://earray.chem.agilent.com/suredesign/">https://earray.chem.agilent.com/suredesign/</a> , For NimbleGen's SeqCap go to <a href="http://www.nimblegen.com/products/seqcap/index.html">http://www.nimblegen.com/products/seqcap/index.html</a> and find BED files under Design and Annotation Files. </li>
 </ul>
 </li>
 </ul><h3>Authors and Contributors</h3>
