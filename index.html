@@ -63,15 +63,13 @@
 <p>Simexon requires two major inputs. One is the sample genome sequence, and the other is the target region information.</p>
 
 <ul>
-<li>
-<p>Sample genome sequence: This is a FASTA file (e.g. ref.fa). You will need to index the file and generate .2bit
-</p>
-<pre>
-samtools faidx ref.fa
-faToTwoBit ref.fa ref.2bit</pre>
+<li>Sample genome sequence: This is a FASTA file (e.g. ref.fa). You will need to index the file and generate .2bit 
+<pre><code>
+&gt;samtools faidx ref.fa
+&gt;faToTwoBit ref.fa ref.2bit
+</code></pre>
 </li>
-<li>
-<p>Target region information: Target regions can be specified by two different ways. </p>
+<li>Target region information: Target regions can be specified by two different ways. 
 
 <ul>
 <li>Ideal target mode: In ideal target mode, you will provide a list of genomic coordinates in a BED file (e.g. chr1   798833 799125). Ideal targets of major exome capture platforms are freely available from vendor's website. For Agilent's SureSelect platforms, go to <a href="https://earray.chem.agilent.com/suredesign/">https://earray.chem.agilent.com/suredesign/</a> , For NimbleGen's SeqCap go to <a href="http://www.nimblegen.com/products/seqcap/index.html">http://www.nimblegen.com/products/seqcap/index.html</a> and find BED files under Design and Annotation Files. </li>
