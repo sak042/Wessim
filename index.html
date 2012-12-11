@@ -86,12 +86,10 @@ To run Simexon, Python 2.7 or later is required. To install Python, go to <a hre
 <pre><code>
 # Run Simexon1 in ideal target mode
 &gt;python Simexon1.py -R ref.fa -B target.bed -n 1000000 -l 100 -M model.gzip -z -o result
-</code></pre>
+</code></pre> -t 4
+This will generate *result.fastq.gz* (single-end mode / gzip compressed) using 4 threads (CPU cores).
 
-<p>This will generate <em>result.fastq.gz</em> (single-end mode / gzip compressed).</p>
-
-<p>For Simexon2:</p>
-
+For Simexon2:
 <pre><code>
 # Generate a FASTA file of probe sequence
 &gt;python Prep_Probe2Fa.py probe.txt (this generates probe.txt.fa)
@@ -121,7 +119,7 @@ Parameters for exome capture:
   -f INT      mean (f)ragment size. this corresponds to insert size when sequencing in paired-end mode. [200]
   -d INT      standard (d)eviation of fragment size [50]
   -m INT      (m)inimum fragment length [read_length + 20]
-  -x INT      slack margin of the given boundaries [0]
+  -x INT      slack margin of the given boundaries [0] (only for Simexon1)
 
 Parameters for sequencing:
   -p          generate paired-end reads [single]
