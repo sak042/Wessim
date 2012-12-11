@@ -14,16 +14,16 @@ def main(argv):
 	serverStopCommand = "gfServer stop localhost 6666"
 	serverStartCommand = "gfServer start -canStop localhost 6666 " + ref
 	blatCommand = "gfClient localhost 6666 / -minIdentity=" + MINIDENTITY + " -minScore=" + MINSCORE + " " + probefile + " " + outfile
-	print serverStopCommand
+#	print serverStopCommand
 #	os.system(serverStopCommand)
-	print serverStartCommand
+#	print serverStartCommand
 #	os.system(serverStartCommand)
 	print blatCommand
 	os.system(blatCommand)
 
 
 def usage():
-	print ">python x2.blatprobes.py ref.2bit probes.fa output.psl"
+	print ">python Prep_BlatSearch.py ref.2bit probes.fa output.psl"
 	sys.exit()
 
 if __name__=="__main__":

@@ -20,7 +20,7 @@ def subprogram(command, name):
 def main(argv):
 	t0 = time()
 	arguline = " ".join(argv)
-	parser = argparse.ArgumentParser(description='Simexon2: Exome capture simulator (Probe-based version)', prog='Simexon2, formatter_class=argparse.RawTextHelpFormatter)
+	parser = argparse.ArgumentParser(description='Simexon2: Exome capture simulator (Probe-based version)', prog='Simexon2, formatter_class=argparse.RawTextHelpFormatter')
 	group1 = parser.add_argument_group('Mandatory input files')
 	group1.add_argument('-R', metavar = 'FILE', dest='reference', required=True, help='faidx-indexed (R)eference genome FASTA file')
 	group1.add_argument('-P', metavar = 'FILE', dest='probe', required=True, help='(P)robe sequence FASTA file')

@@ -23,7 +23,7 @@ def main(argv):
 	w.close()
 
 def usage():
-	print ">Python x1.probestofa.py probefile"
+	print ">Python Prep_Probe2Fa.py probefile"
 	sys.exit()
 
 
