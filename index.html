@@ -55,12 +55,15 @@
 <li>
 <strong>samtools</strong>: samtools is needed to index your sample genome FASTA file (samtools faidx).</li>
 <li>
-<strong>GemSim</strong> error models: Simexon uses GemSim's empirical error models for NGS read generation. Go to GemSim's project page (<a href="http://sourceforge.net/projects/gemsim/">http://sourceforge.net/projects/gemsim/</a>) to download GemSim. You will find several model files (e.g. ill100v4_p.gzip) under 'models' directory. </li>
+<strong>GemSim</strong> error models: Simexon uses GemSim's empirical error models for NGS read generation. Go to GemSim's project page (<a href="http://sourceforge.net/projects/gemsim/">http://sourceforge.net/projects/gemsim/</a>) to download GemSim. You will find several model files (e.g. ill100v4_p.gzip) under 'models' directory. Save them and remember their location.</li>
 </ul><h3>Preparing Input Files</h3>
 
-<p>Simexon requires two </p>
+<p>Simexon requires two major inputs. One is the sample genome sequence, and the other is the target region information.</p>
 
-<p>To run <strong>Simexon</strong>, the followings are required.</p>
+<ul>
+<li>Sample genome sequence: This is a FASTA file (e.g. hg19.fa). The FASTA file must be faidx indexed. </li>
+<li>Target region information:</li>
+</ul><p>To run <strong>Simexon</strong>, the followings are required.</p>
 
 <h4>Input</h4>
 
