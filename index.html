@@ -63,7 +63,13 @@
 <p>Simexon requires two major inputs. One is the sample genome sequence, and the other is the target region information.</p>
 
 <ul>
-<li>Sample genome sequence: This is a FASTA file (e.g. hg19.fa). The FASTA file must be faidx indexed. </li>
+<li>Sample genome sequence: This is a FASTA file (e.g. ref.fa). You will need to index the file and generate .2bit 
+
+<ul>
+<li>samtools faidx ref.fa</li>
+<li>faToTwoBit ref.fa ref.2bit </li>
+</ul>
+</li>
 <li>Target region information: Target regions can be specified by two different ways. 
 
 <ul>
