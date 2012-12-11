@@ -53,6 +53,8 @@
 <strong>gfServer</strong> and <strong>gfClient</strong>: In probe hybridization mode, Simexon runs more than 100,000 queries again the reference genome. This essentially requires a local blat server. gfServer and gfClient are pre-compiled programs for establishing private blat server on your computer. go to <a href="http://hgdownload.cse.ucsc.edu/admin/exe/">http://hgdownload.cse.ucsc.edu/admin/exe/</a> to download gfServer and gfClient (and set your local path to access the two programs anywhere). For more details about the tools, please refer to <a href="http://genome.ucsc.edu/FAQ/FAQblat.html#blat5">http://genome.ucsc.edu/FAQ/FAQblat.html#blat5</a>
 </li>
 <li>
+<strong>faToTwoBit</strong>: go to <a href="http://hgdownload.cse.ucsc.edu/admin/exe/">http://hgdownload.cse.ucsc.edu/admin/exe/</a> and download faToTwoBit. This is required to convert your FASTA file to .2bit </li>
+<li>
 <strong>samtools</strong>: samtools is needed to index your sample genome FASTA file (samtools faidx).</li>
 <li>
 <strong>GemSim</strong> error models: Simexon uses GemSim's empirical error models for NGS read generation. Go to GemSim's project page (<a href="http://sourceforge.net/projects/gemsim/">http://sourceforge.net/projects/gemsim/</a>) to download GemSim. You will find several model files (e.g. ill100v4_p.gzip) under 'models' directory. Save them and remember their location.</li>
