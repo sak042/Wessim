@@ -62,7 +62,7 @@
 
 <ul>
 <li>
-<strong>Sample genome sequence</strong>: This is a FASTA file (e.g. ref.fa). You will need to index the file and generate .2bit 
+<strong>Sample genome sequence</strong>: This is a FASTA file (e.g. ref.fa). You will need to index the file and generate .2bit
 <pre><code>
 &gt;samtools faidx ref.fa
 &gt;faToTwoBit ref.fa ref.2bit
@@ -84,8 +84,8 @@
 <p>The basic synopsis of Simexon command is like below:</p>
 
 <pre><code>
-&gt;python Simexon1.py -R ref.fa -B ideal_target.bed -n 1000000 -l 100 -M model.gzip -z -o result
-&gt;python Simexon2.py -R ref.fa -P probe_sequence.txt.fa -B probe_match.txt.fa.psl -n 1000000 -l 76 -M model.gzip -pz -o result2
+&gt;python Simexon1.py -R ref.fa -B target.bed -n 1000000 -l 100 -M model.gzip -z -o result
+&gt;python Simexon2.py -R ref.fa -P probe.txt.fa -B probe_match.txt.fa.psl -n 1000000 -l 76 -M model.gzip -pz -o result2
 </code></pre>
 
 <h3>Authors and Contributors</h3>
