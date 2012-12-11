@@ -1,43 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Simexon : Simexon: A targeted resequencing (exome sequencing) simulator" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Simexon by sak042</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Simexon</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Simexon</h1>
+        <p class="header">Simexon: A targeted resequencing (exome sequencing) simulator</p>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/sak042/Simexon">View on GitHub</a>
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/sak042/Simexon/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/sak042/Simexon/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/sak042/Simexon">View On GitHub</a></li>
+        </ul>
 
-          <h1 id="project_title">Simexon</h1>
-          <h2 id="project_tagline">Simexon: A targeted resequencing (exome sequencing) simulator</h2>
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/sak042">sak042</a></p>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/sak042/Simexon/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/sak042/Simexon/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+      </header>
+      <section>
         <h3>Introduction</h3>
 
 <p><strong>Simexon</strong> is a simulator for a targeted resequencing as generally known as exome sequencing. Simexon basically generates a set of <em>artificial</em> DNA fragments for next generation sequencing (NGS) read simulation. In the targeted resequencing, we constraint the genomic regions that are used to generated DNA fragments to be only a part of the entire genome; they are usually exons and/or a few introns and untranslated regions (UTRs).</p>
 
+<h3>Install Simexon</h3>
+
+<p>To run Simexon, Python 2.7 or later is required. To install Python, go to <a href="http://python.org/">http://python.org/</a>
+Download Simexon using the links in this page, or go to <a href="https://github.com/sak042/Simexon">https://github.com/sak042/Simexon</a></p>
+
 <h3>Requirements</h3>
 
-<p>To run <strong>Simexon</strong>, the followings are required.</p>
+<p>The following programs are required to run Simexon or to prepare input files:</p>
+
+<ul>
+<li>pysam library: go to <a href="http://code.google.com/p/pysam/">http://code.google.com/p/pysam/</a> to install pysam</li>
+<li>gfServer and gfClient: In probe hybridization mode, Simexon runs more than 100,000 queries again the reference genome. This essentially requires a local blat server. gfServer and gfClient are pre-compiled programs for establishing private blat server on your computer. go to <a href="http://hgdownload.cse.ucsc.edu/admin/exe/">http://hgdownload.cse.ucsc.edu/admin/exe/</a> to download gfServer and gfClient (and set your local path to access the two programs anywhere). For more details about the tools, please refer to <a href="http://genome.ucsc.edu/FAQ/FAQblat.html#blat5">http://genome.ucsc.edu/FAQ/FAQblat.html#blat5</a>
+</li>
+</ul><p>To run <strong>Simexon</strong>, the followings are required.</p>
 
 <h4>Input</h4>
 
@@ -79,17 +89,11 @@ $ git checkout gh-pages
 
 <p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
       </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Simexon maintained by <a href="https://github.com/sak042">sak042</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
       </footer>
     </div>
-
-    
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
   </body>
 </html>
