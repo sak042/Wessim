@@ -835,7 +835,7 @@ def H(l, n, x, u1, u2, mvnpdf):
 	return toKeep
 	
 def readmvnTable():
-	f = open("mvnTable.txt")
+	f = open("lib/mvnTable.txt")
 	context = f.read()
 	lines = context.split("\n")
 	mvnTable = []

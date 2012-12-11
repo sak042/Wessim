@@ -87,7 +87,7 @@ def main(argv):
 	print "Gzip compress?", compress
 	print "Quality base:", qualbase
 	print "Thread number:", threadnumber
-	print "Job started at:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+	print "Job started at:", strftime("%Y-%m-%d %H:%M:%S", localtime())
 	print "-------------------------------------------"
 	print
 

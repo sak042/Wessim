@@ -30,7 +30,7 @@ def main(argv):
 	group2.add_argument('-f', metavar = 'INT', type=int, dest='fragsize', required=False, help='mean (f)ragment size. this corresponds to insert size when sequencing in paired-end mode. [200]', default=200)
 	group2.add_argument('-d', metavar = 'INT', type=int, dest='fragsd', required=False, help='standard (d)eviation of fragment size [50]', default=50)
 	group2.add_argument('-m', metavar = 'INT', type=int, dest='fragmin', required=False, help='(m)inimum fragment length [read_length + 20]')
-	group2.add_argument('-y', metavar = 'PERCENT',type=int, dest='bind', required=False, help='minimum required fraction of probe match to be h(y)bridized [50]', default=50) 
+	group2.add_argument('-x', metavar = 'INT',type=int, dest='slack', required=False, help='slack margin of the given boundaries [0]', default=0) 
 	
 	group3 = parser.add_argument_group('Parameters for sequencing')
 	group3.add_argument('-p', action='store_true', help='generate paired-end reads [single]')
@@ -48,14 +48,13 @@ def main(argv):
 	args = parser.parse_args()
 	reffile = args.reference
 	regionfile = args.region
-	getRegionVector(reffile, regionfile)
-	sys.exit(0)
 	
 	isize = args.fragsize
 	isd = args.fragsd
 	imin = args.fragmin
-	bind = args.bind
+	slack = args.slack
 
+	getRegionVector(reffile, regionfile, slack)
 	paired = args.p
 	readlength = args.readlength
 	readnumber = args.readnumber		
@@ -79,8 +78,7 @@ def main(argv):
 	print 
 	print "-------------------------------------------"
 	print "Reference:", reffile
-	print "Probeset:", probefile
-	print "Probematch:", alignfile
+	print "Region file:", regionfile
 	print "Fragment:",isize, "+-", isd, ">", imin
 	print "Paired-end mode?", paired
 	print "Sequencing model:", model
@@ -89,7 +87,7 @@ def main(argv):
 	print "Gzip compress?", compress
 	print "Quality base:", qualbase
 	print "Thread number:", threadnumber
-	print "Job started at:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+	print "Job started at:", strftime("%Y-%m-%d %H:%M:%S", localtime())
 	print "-------------------------------------------"
 	print
 
@@ -166,7 +164,7 @@ def main(argv):
 		wread2.close()
 	sys.exit(0)
 
-def getRegionVector(fastafile, regionfile):
+def getRegionVector(fastafile, regionfile, slack):
 	print "Generating fasta file for given regions..."
 	faoutfile = regionfile + ".fa"
 	abdoutfile = regionfile + ".abd"
@@ -182,8 +180,8 @@ def getRegionVector(fastafile, regionfile):
 		if i.startswith("#") or len(values)<3:
 			continue
 		chrom = values[0]
-		start = int(values[1])
-		end = int(values[2])
+		start = max(int(values[1]) - slack, 1)
+		end = int(values[2]) + slack
 		header = ">" + chrom + "_" + str(start) + "_" + str(end)
 		x = ref.fetch(chrom, start, end)
 		length = len(x)

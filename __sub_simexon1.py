@@ -16,8 +16,7 @@ def main(argv):
 	parser = argparse.ArgumentParser(description='sub-simexon: a sub-program for Simexon1. (NOTE!) Do not run this program. Use "Simexon1.py" instead. ', prog='Simexon', formatter_class=argparse.RawTextHelpFormatter)
 	group1 = parser.add_argument_group('Mandatory input files')
 	group1.add_argument('-R', metavar = 'FILE', dest='reference', required=True, help='(R)eference genome FASTA file')
-	group1.add_argument('-P', metavar = 'FILE', dest='probe', required=True, help='(P)robe sequence FASTA file')
-	group1.add_argument('-B', metavar = 'FILE', dest='probeblat', required=True, help='(B)lat matched probe regions .PSL file')
+	group1.add_argument('-B', metavar = 'FILE', dest='region', required=True, help='Target region .(B)ED file')
 
 	group2 = parser.add_argument_group('Parameters for exome capture')
 	group2.add_argument('-f', metavar = 'INT', type=int, dest='fragsize', required=False, help='mean (f)ragment size. this corresponds to insert size when sequencing in paired-end mode. [200]', default=200)
@@ -43,8 +42,9 @@ def main(argv):
 
 	args = parser.parse_args()
 	reffile = args.reference
-	probefile = args.probe
-	alignfile = args.probeblat
+	regionfile = args.region
+	faoutfile = regionfile + ".fa"
+	abdoutfile = regionfile + ".abd"
 	
 	isize = args.fragsize
 	isd = args.fragsd
@@ -65,17 +65,31 @@ def main(argv):
 		print "too small mean fragment size (" + str(isize) + ") compared to minimum length (" + str(imin) + "). Increase it and try again."
 		sys.exit(0) 
 	model = args.model
-		
+
+	f = open(faoutfile)
+	i = f.readline()
+	seqlist = []
+	abdlist = []
+	while i:
+		header = i.strip()[1:]
+		seq = f.readline().strip()
+		seqlist.append((header, seq))
+		i = f.readline()
+	f.close()
+	f = open(abdoutfile)
+	i = f.readline()
+	while i:
+		abd = int(i.strip())
+		abdlist.append(abd)
+		i = f.readline()
+	f.close()
+	last = abdlist[-1]
+
 	outfile = args.outfile + "-" + str(subid)
 	compress = args.z
 	qualbase = args.qualbase
 	verbose = args.v
 
-	matchdic = {}
-	countdic = {}
-	f1 = open(probefile)
-	f2 = open(alignfile)
-	fref = pysam.Fastafile(reffile)
 	wread = None
 	wread2 = None
 	if paired and compress:
@@ -88,55 +102,11 @@ def main(argv):
 		wread = gzip.open(outfile + ".fastq.gz", 'wb')
 	else:
 		wread = open(outfile + ".fastq", 'w')
-	line1 = f1.readline()
 	processed = 0
 	totalseq = 1
 	first = True
 	dirtag = ('','+','-')
 	### Ignore first 5 lines of psl file (header)
-	for i in range(0, 6):
-		line2 = f2.readline()
-	while line1:
-		seqid = line1.strip()[1:]
-		values = line2.split("\t")
-		if len(values)<16:
-			line1 = f1.readline()
-			line1 = f1.readline()
-			first = True
-			totalseq += 1
-			continue
-		pslid = values[9]
-		pslscore = values[0]
-		pslchrom = values[13]
-		pslstart = values[15]
-		pslend= values[16]
-		if not seqid==pslid:
-			line1 = f1.readline()
-			line1 = f1.readline()
-			processed+=1
-			totalseq += 1
-			first = True
-			continue
-		if not first:
-			match = matchdic[seqid]
-			match.append((pslscore, pslchrom, pslstart, pslend))
-			matchdic[seqid] = match
-		else:
-			matchdic[seqid] = [(pslscore, pslchrom, pslstart, pslend)]
-			first = False
-		line2 = f2.readline()
-	for seqid in matchdic.keys():
-		match = matchdic[seqid]
-		matchno = len(match)
-		if matchno in countdic.keys():
-			count = countdic[matchno]
-			count += 1
-			countdic[matchno] = count
-		else:
-			countdic[matchno] = 1
-	totalmatched = len(matchdic.keys())
-	countdic[0] = totalseq - totalmatched
-	matchkeys = matchdic.keys()
 
 	if paired:
 		mx1,mx2,insD1,insD2,delD1,delD2,intervals,gQualL,bQualL,iQualL,mates,rds,rdLenD = parseModel(model, paired, readlength)
@@ -204,8 +174,7 @@ def main(argv):
 		RL=ln(readlength)
 
 	mvnTable = readmvnTable()
-	
-	gcVector = getFragmentUniform(fref, matchkeys, matchdic, isize, 1000, bind)
+	gcVector = getFragmentUniform(abdlist, seqlist, last, isize, 1000, bind)
 #	print gcVector
 #	u1, u2, newSD, m1, m2 = generateMatrices(isd, isize, gcVector)
 	gcSD = numpy.std(gcVector)
@@ -215,23 +184,22 @@ def main(argv):
 	count = 0
 	i = readstart
 	while i < readend+1:
-		key = pickonekey(matchkeys)
-		fragment = getFragment(matchdic, key, isize, newSD, imin, bind)		
-	
-		fragment_chrom = fragment[0]
-		fragment_start = int(fragment[1])
-		fragment_end = int(fragment[2])
-		if fragment_start < 0:
-			continue
-		seq = getSequence(fref, fragment)
-		if len(seq)<imin:
+		pos = int(random.uniform(1, last))
+		ind = getIndex(abdlist, pos)
+		seq = seqlist[ind]
+		ref = seq[1]
+		refLen=len(ref)
+		header = seq[0]
+		headervalues = header.split("_")
+		fragment_chrom = headervalues[0]
+		fragment_start = int(headervalues[1])
+		fragment_end = int(headervalues[2])
+		if refLen<imin:
 			continue
 		gccount = getGCCount(seq)
-		keep = H2(len(seq), gccount, isize, newSD, isd, gcSD,mvnTable)
+		keep = H2(refLen, gccount, isize, newSD, isd, gcSD,mvnTable)
 		if not keep:
 			continue		
-		ref = seq
-		refLen=len(ref)
 		if not paired:
 			readLen=RL()
 			read1,pos,dir,quals1=readGen1(ref,refLen,readLen,gens(),readLen,mx1,insDict,delDict,gQList,bQList,iQList,qualbase)
@@ -273,7 +241,6 @@ def main(argv):
 			t1 = time()
 			print "[subprocess " + str(subid) + "]: " + str(count) + " reads have been generated... in %f secs" % (t1-t0)
 
-	fref.close()
 	wread.close()
 	if paired:
 		wread2.close()
@@ -299,23 +266,19 @@ def getFragment(matchdic, key, mu, sigma, lower, bind):
 	pickedfragment = pickFragment(pickedproberegion, ins, bind)	
 	return pickedfragment
 
-def getFragmentUniform(fref, matchkeys, matchdic, mu, total, bind):
+def getFragmentUniform(abdlist, seqlist, last, mu, total, bind):
 	result = []
-	ins = mu
 	i = 0
 	while i < 1000:
-		key = pickonekey(matchkeys)
-		match = matchdic[key]
-		pickedproberegion = pickproberegion(match)
-		pickedfragment = pickFragment(pickedproberegion, ins, bind)
-		fragment_chrom = pickedfragment[0]
-		fragment_start = int(pickedfragment[1])
-		fragment_end = int(pickedfragment[2])
-		if fragment_start < 0:
+		pos = int(random.uniform(1, last))
+		ind = getIndex(abdlist, pos)
+		seq = seqlist[ind][1]
+		seqlen = len(seq)
+		if seqlen < mu:
 			continue
-		seq = getSequence(fref, pickedfragment)
-		if len(seq)<ins:
-			continue
+		margin = seqlen - mu
+		start = random.randint(0, margin)
+		seq = seq[start: start+mu]
 		gcCount = getGCCount(seq)
 		result.append(gcCount)
 		i+=1
@@ -835,7 +798,7 @@ def H(l, n, x, u1, u2, mvnpdf):
 	return toKeep
 	
 def readmvnTable():
-	f = open("mvnTable.txt")
+	f = open("lib/mvnTable.txt")
 	context = f.read()
 	lines = context.split("\n")
 	mvnTable = []
@@ -846,7 +809,11 @@ def readmvnTable():
 		mvnTable.append(values)
 	f.close()
 	return mvnTable
-	
+
+def getIndex(abdlist, pos):
+	i = bisect.bisect_right(abdlist, pos)
+	return i
+
 if __name__=="__main__":
 	main(sys.argv[1:])
 	sys.exit(0)
