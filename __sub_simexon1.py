@@ -812,7 +812,7 @@ def readmvnTable():
 
 def getIndex(abdlist, pos):
 	i = bisect.bisect_right(abdlist, pos)
-	return i
+	return i 
 
 if __name__=="__main__":
 	main(sys.argv[1:])

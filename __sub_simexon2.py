@@ -832,7 +832,7 @@ def H(l, n, x, u1, u2, mvnpdf):
 	
 	r = random.random()
 	toKeep = v > r
-	return toKeep
+	return toKeep 
 	
 def readmvnTable():
 	f = open("lib/mvnTable.txt")
