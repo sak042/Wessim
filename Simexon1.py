@@ -48,7 +48,7 @@ def main(argv):
 	args = parser.parse_args()
 	reffile = args.reference
 	regionfile = args.region
-	
+	 
 	isize = args.fragsize
 	isd = args.fragsd
 	imin = args.fragmin
