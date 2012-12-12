@@ -23,7 +23,7 @@ def main(argv):
 
 
 def usage():
-	print ">python Prep_BlatSearch.py ref.2bit probes.fa output.psl"
+	print ">python Prep_BlatSearch.py ref.2bit probes.txt.fa output.psl"
 	sys.exit()
 
 if __name__=="__main__":
