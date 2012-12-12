@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Simexon by sak042</title>
+    <title>Wessim by sak042</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -16,13 +16,13 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1 class="header">Simexon</h1>
-        <p class="header">Simexon: A targeted resequencing (exome sequencing) simulator</p>
+        <h1 class="header">Wessim</h1>
+        <p class="header">Wessim: Whole Exome Sequencing SIMulator using in silico exome capture</p>
 
         <ul>
-          <li class="download"><a class="buttons" href="https://github.com/sak042/Simexon/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/sak042/Simexon/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/sak042/Simexon">View On GitHub</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/sak042/Wessim/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/sak042/Wessim/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/sak042/Wessim">View On GitHub</a></li>
         </ul>
 
         <p class="header">This project is maintained by <a class="header name" href="https://github.com/sak042">sak042</a></p>
@@ -32,16 +32,16 @@
       <section>
         <h3>Introduction</h3>
 
-<p><strong>Simexon</strong> is a simulator for a targeted resequencing as generally known as exome sequencing. Simexon basically generates a set of <em>artificial</em> DNA fragments for next generation sequencing (NGS) read simulation. In the targeted resequencing, we constraint the genomic regions that are used to generated DNA fragments to be only a part of the entire genome; they are usually exons and/or a few introns and untranslated regions (UTRs).</p>
+<p><strong>Wessim</strong> is a simulator for a targeted resequencing as generally known as exome sequencing. Wessim basically generates a set of <em>artificial</em> DNA fragments for next generation sequencing (NGS) read simulation. In the targeted resequencing, we constraint the genomic regions that are used to generated DNA fragments to be only a part of the entire genome; they are usually exons and/or a few introns and untranslated regions (UTRs).</p>
 
-<h3>Install Simexon</h3>
+<h3>Install Wessim</h3>
 
-<p>Download Simexon using the links in this page, or go to <a href="https://github.com/sak042/Simexon">https://github.com/sak042/Simexon</a><br>
-To run Simexon, Python 2.7 or later is required. To install Python, go to <a href="http://python.org/">http://python.org/</a></p>
+<p>Download Wessim using the links in this page, or go to <a href="https://github.com/sak042/Wessim">https://github.com/sak042/Wessim</a><br>
+To run Wessim, Python 2.7 or later is required. To install Python, go to <a href="http://python.org/">http://python.org/</a></p>
 
 <h3>Requirements</h3>
 
-<p>The following programs are required to run Simexon or to prepare input files:</p>
+<p>The following programs are required to run Wessim or to prepare input files:</p>
 
 <ul>
 <li>
@@ -49,17 +49,17 @@ To run Simexon, Python 2.7 or later is required. To install Python, go to <a hre
 <li>
 <strong>numpy</strong> library: go to <a href="http://numpy.scipy.org/">http://numpy.scipy.org/</a> to install numpy</li>
 <li>
-<strong>gfServer</strong> and <strong>gfClient</strong>: In probe hybridization mode, Simexon runs more than 100,000 queries again the reference genome. This essentially requires a local blat server. gfServer and gfClient are pre-compiled programs for establishing private blat server on your computer. go to <a href="http://hgdownload.cse.ucsc.edu/admin/exe/">http://hgdownload.cse.ucsc.edu/admin/exe/</a> to download gfServer and gfClient (and set your local path to access the two programs anywhere). For more details about the tools, please refer to <a href="http://genome.ucsc.edu/FAQ/FAQblat.html#blat5">http://genome.ucsc.edu/FAQ/FAQblat.html#blat5</a>
+<strong>gfServer</strong> and <strong>gfClient</strong>: In probe hybridization mode, Wessim runs more than 100,000 queries again the reference genome. This essentially requires a local blat server. gfServer and gfClient are pre-compiled programs for establishing private blat server on your computer. go to <a href="http://hgdownload.cse.ucsc.edu/admin/exe/">http://hgdownload.cse.ucsc.edu/admin/exe/</a> to download gfServer and gfClient (and set your local path to access the two programs anywhere). For more details about the tools, please refer to <a href="http://genome.ucsc.edu/FAQ/FAQblat.html#blat5">http://genome.ucsc.edu/FAQ/FAQblat.html#blat5</a>
 </li>
 <li>
 <strong>faToTwoBit</strong>: go to <a href="http://hgdownload.cse.ucsc.edu/admin/exe/">http://hgdownload.cse.ucsc.edu/admin/exe/</a> and download faToTwoBit. This is required to convert your FASTA file to .2bit </li>
 <li>
 <strong>samtools</strong>: samtools is needed to index your sample genome FASTA file (samtools faidx).</li>
 <li>
-<strong>GemSim</strong> error models: Simexon uses GemSim's empirical error models for NGS read generation. Go to GemSim's project page (<a href="http://sourceforge.net/projects/gemsim/">http://sourceforge.net/projects/gemsim/</a>) to download GemSim. You will find several model files (e.g. ill100v4_p.gzip) under 'models' directory. Save them and remember their location.</li>
+<strong>GemSim</strong> error models: Wessim uses GemSim's empirical error models for NGS read generation. Go to GemSim's project page (<a href="http://sourceforge.net/projects/gemsim/">http://sourceforge.net/projects/gemsim/</a>) to download GemSim. You will find several model files (e.g. ill100v4_p.gzip) under 'models' directory. Save them and remember their location.</li>
 </ul><h3>Preparing Input Files</h3>
 
-<p>Simexon requires two major inputs. One is the sample genome sequence, and the other is the target region information.</p>
+<p>Wessim requires two major inputs. One is the sample genome sequence, and the other is the target region information.</p>
 
 <ul>
 <li>
@@ -79,18 +79,18 @@ To run Simexon, Python 2.7 or later is required. To install Python, go to <a hre
 <strong>Probe sequences</strong>: Probe sequences are available for SureSelect platforms in the SureDesign homepage (<a href="https://earray.chem.agilent.com/suredesign/">https://earray.chem.agilent.com/suredesign/</a>) (see above). Usually those files are named "[platform]_probe.txt"</li>
 </ol>
 </li>
-</ul><h3>Running Simexon</h3>
+</ul><h3>Running Wessim</h3>
 
-<p>The basic synopsis of Simexon1 is like below:</p>
+<p>The basic synopsis of Wessim1 is like below:</p>
 
 <pre><code>
-# Run Simexon1 in ideal target mode
-&gt;python Simexon1.py -R ref.fa -B target.bed -n 1000000 -l 100 -M model.gzip -z -o result -t 4
+# Run Wessim1 in ideal target mode
+&gt;python Wessim1.py -R ref.fa -B target.bed -n 1000000 -l 100 -M model.gzip -z -o result -t 4
 </code></pre> 
 
 <p>This will generate <em>result.fastq.gz</em> (single-end mode / gzip compressed) using 4 threads (CPU cores).</p>
 
-<p>For Simexon2:</p>
+<p>For Wessim2:</p>
 
 <pre><code>
 # Generate a FASTA file of probe sequence
@@ -99,21 +99,21 @@ To run Simexon, Python 2.7 or later is required. To install Python, go to <a hre
 &gt;gfServer start -canStop localhost 6666 ref.2bit
 # Run blat search to generate the match list
 &gt;python Prep_BlatSearch.py ref.2bit probe.txt.fa probe.txt.fa.psl
-# Run Simexon2 in probe hybridization mode.
-&gt;python Simexon2.py -R ref.fa -P probe.txt.fa -B probe_match.txt.fa.psl -n 1000000 -l 76 -M model.gzip -pz -o result
+# Run Wessim2 in probe hybridization mode.
+&gt;python Wessim2.py -R ref.fa -P probe.txt.fa -B probe_match.txt.fa.psl -n 1000000 -l 76 -M model.gzip -pz -o result
 </code></pre>
 
 <p>This will generate <em>result_1.fastq.gz</em> and <em>result_2.fastq.gz</em> (paired-end mode / gzip compressed).</p>
 
-<h3>Simexon Options</h3>
+<h3>Wessim Options</h3>
 
 <p>You can use '-h' for detailed help in command line.</p>
 
-<pre><code>Mandatory input files (for Simexon1 and Simexon2 in common):
+<pre><code>Mandatory input files (for Wessim1 and Wessim2 in common):
   -R FILE     faidx-indexed (R)eference genome FASTA file
-For Simexon1 only:
+For Wessim1 only:
   -B FILE     Target region .(B)ED file
-For Simexon2 only:
+For Wessim2 only:
   -P FILE     (P)robe sequence FASTA file
   -B FILE     (B)lat matched probe regions .PSL file
 
@@ -121,7 +121,7 @@ Parameters for exome capture:
   -f INT      mean (f)ragment size. this corresponds to insert size when sequencing in paired-end mode. [200]
   -d INT      standard (d)eviation of fragment size [50]
   -m INT      (m)inimum fragment length [read_length + 20]
-  -x INT      slack margin of the given boundaries [0] (only for Simexon1)
+  -x INT      slack margin of the given boundaries [0] (only for Wessim1)
 
 Parameters for sequencing:
   -p          generate paired-end reads [single]
