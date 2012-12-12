@@ -85,11 +85,13 @@ To run Simexon, Python 2.7 or later is required. To install Python, go to <a hre
 
 <pre><code>
 # Run Simexon1 in ideal target mode
-&gt;python Simexon1.py -R ref.fa -B target.bed -n 1000000 -l 100 -M model.gzip -z -o result
-</code></pre> -t 4
-This will generate *result.fastq.gz* (single-end mode / gzip compressed) using 4 threads (CPU cores).
+&gt;python Simexon1.py -R ref.fa -B target.bed -n 1000000 -l 100 -M model.gzip -z -o result -t 4
+</code></pre> 
 
-For Simexon2:
+<p>This will generate <em>result.fastq.gz</em> (single-end mode / gzip compressed) using 4 threads (CPU cores).</p>
+
+<p>For Simexon2:</p>
+
 <pre><code>
 # Generate a FASTA file of probe sequence
 &gt;python Prep_Probe2Fa.py probe.txt (this generates probe.txt.fa)
@@ -137,7 +139,7 @@ Output options:
 
 <h3>Support or Contact</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>For GitHub use, check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
       </section>
       <footer>
         <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
