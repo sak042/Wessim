@@ -1,35 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Wessim by sak042</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Wessim : Wessim: Whole Exome Sequencing SIMulator using in silico exome capture" />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Wessim</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1 class="header">Wessim</h1>
-        <p class="header">Wessim: Whole Exome Sequencing SIMulator using in silico exome capture</p>
 
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/sak042/Wessim/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/sak042/Wessim/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/sak042/Wessim">View On GitHub</a></li>
-        </ul>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/sak042/Wessim">View on GitHub</a>
 
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/sak042">sak042</a></p>
+          <h1 id="project_title">Wessim</h1>
+          <h2 id="project_tagline">Wessim: Whole Exome Sequencing SIMulator using in silico exome capture</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/sak042/Wessim/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/sak042/Wessim/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-      </header>
-      <section>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h3>Introduction</h3>
 
 <p><strong>Wessim</strong> is a simulator for a targeted resequencing as generally known as exome sequencing. Wessim basically generates a set of <em>artificial</em> DNA fragments for next generation sequencing (NGS) read simulation. In the targeted resequencing, we constraint the genomic regions that are used to generated DNA fragments to be only a part of the entire genome; they are usually exons and/or a few introns and untranslated regions (UTRs).</p>
@@ -49,7 +50,7 @@ To run Wessim, Python 2.7 or later is required. To install Python, go to <a href
 <li>
 <strong>numpy</strong> library: go to <a href="http://numpy.scipy.org/">http://numpy.scipy.org/</a> to install numpy</li>
 <li>
-<strong>gfServer</strong> and <strong>gfClient</strong>: In probe hybridization mode, Wessim runs more than 100,000 queries again the reference genome. This essentially requires a local blat server. gfServer and gfClient are pre-compiled programs for establishing private blat server on your computer. go to <a href="http://hgdownload.cse.ucsc.edu/admin/exe/">http://hgdownload.cse.ucsc.edu/admin/exe/</a> to download gfServer and gfClient (and set your local path to access the two programs anywhere). For more details about the tools, please refer to <a href="http://genome.ucsc.edu/FAQ/FAQblat.html#blat5">http://genome.ucsc.edu/FAQ/FAQblat.html#blat5</a>
+<strong>gfServer</strong> and <strong>gfClient</strong>: In probe hybridization mode, Wessim runs more than 100,000 queries against the reference genome. This essentially requires a local blat server. gfServer and gfClient are pre-compiled programs for establishing private blat server on your computer. go to <a href="http://hgdownload.cse.ucsc.edu/admin/exe/">http://hgdownload.cse.ucsc.edu/admin/exe/</a> to download gfServer and gfClient (and set your local path to access the two programs anywhere). For more details about the tools, please refer to <a href="http://genome.ucsc.edu/FAQ/FAQblat.html#blat5">http://genome.ucsc.edu/FAQ/FAQblat.html#blat5</a>
 </li>
 <li>
 <strong>faToTwoBit</strong>: go to <a href="http://hgdownload.cse.ucsc.edu/admin/exe/">http://hgdownload.cse.ucsc.edu/admin/exe/</a> and download faToTwoBit. This is required to convert your FASTA file to .2bit </li>
@@ -141,11 +142,17 @@ Output options:
 
 <p>For GitHub use, check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
       </section>
-      <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Wessim maintained by <a href="https://github.com/sak042">sak042</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-		
+
+    
+
   </body>
 </html>
