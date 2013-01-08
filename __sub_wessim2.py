@@ -28,8 +28,8 @@ def main(argv):
 	group3 = parser.add_argument_group('Parameters for sequencing')
 	group3.add_argument('-p', action='store_true', help='generate paired-end reads [single]')
 	group3.add_argument('-n', help='do not care')
-	group3.add_argument('-1', metavar = 'INT', type=int, dest='readstart', required=True, help='start number of read')
-	group3.add_argument('-2', metavar = 'INT', type=int, dest='readend', required=True, help='end number of read')
+	group3.add_argument('-1', metavar = 'INT', type=int, dest='readstart', required=True, help='start number of read (given by main process)')
+	group3.add_argument('-2', metavar = 'INT', type=int, dest='readend', required=True, help='end number of read (given by main process)')
 	group3.add_argument('-l', metavar = 'INT', type=int, dest='readlength', required=True, help='read (l)ength (bp)')
 	group3.add_argument('-i', metavar = 'INT', type=int, dest='processid', required=True, help='subprocess (i)d')
 	group3.add_argument('-M', metavar = 'FILE', dest='model', required=True, help='GemSim (M)odel file (.gzip)')
@@ -43,6 +43,10 @@ def main(argv):
 
 	args = parser.parse_args()
 	reffile = args.reference
+	fref = None
+	frefs = []
+	metap = []
+	metamode = False
 	probefile = args.probe
 	alignfile = args.probeblat
 	
@@ -75,7 +79,23 @@ def main(argv):
 	countdic = {}
 	f1 = open(probefile)
 	f2 = open(alignfile)
-	fref = pysam.Fastafile(reffile)
+	if not reffile.endswith(".meta"):
+		fref = pysam.Fastafile(reffile)
+	else:
+		metamode = True
+		metain = open(reffile)
+		metaline = metain.readline()
+		totalp = 0.0
+		metap.append(0.0)
+		while metaline:
+			values = metaline.split("\t")
+			fref = pysam.Fastafile(values[0])
+			genomep = float(values[1])
+			totalp += genomep
+			frefs.append(fref)
+			metap.append(genomep)
+			metaline = metain.readline()
+		metain.close()
 	wread = None
 	wread2 = None
 	if paired and compress:
@@ -214,6 +234,7 @@ def main(argv):
 	### Generate!
 	count = 0
 	i = readstart
+	seq = ""
 	while i < readend+1:
 		key = pickonekey(matchkeys)
 		fragment = getFragment(matchdic, key, isize, newSD, imin, bind)		
@@ -223,7 +244,10 @@ def main(argv):
 		fragment_end = int(fragment[2])
 		if fragment_start < 0:
 			continue
-		seq = getSequence(fref, fragment)
+		if metamode == True:
+			seq = getSequenceMeta(frefs, metap, fragment)
+		else:
+			seq = getSequence(fref, fragment)
 		if len(seq)<imin:
 			continue
 		gccount = getGCCount(seq)
@@ -292,6 +316,16 @@ def getSequence(ref, fragment):
 	seq = ref.fetch(chrom, start, end)
 	return seq
 
+def getSequenceMeta(refs, metap, fragment):
+	chrom = fragment[0]
+	start = int(fragment[1])
+	end = int(fragment[2])
+	r = random.random()
+	pos = bisect.bisect_left(metap, r)
+	ref = refs[pos]
+	seq = ref.fetch(chrom, start, end)
+	return seq
+
 def getFragment(matchdic, key, mu, sigma, lower, bind):
 	ins = getInsertLength(mu, sigma, lower)
 	match = matchdic[key]
@@ -303,6 +337,7 @@ def getFragmentUniform(fref, matchkeys, matchdic, mu, total, bind):
 	result = []
 	ins = mu
 	i = 0
+	seq = ""
 	while i < 1000:
 		key = pickonekey(matchkeys)
 		match = matchdic[key]
@@ -313,7 +348,10 @@ def getFragmentUniform(fref, matchkeys, matchdic, mu, total, bind):
 		fragment_end = int(pickedfragment[2])
 		if fragment_start < 0:
 			continue
-		seq = getSequence(fref, pickedfragment)
+		if metamode = True:
+			seq = getSequenceMeta(frefs, metap, pickedfragment)
+		else:
+			seq = getSequence(fref, pickedfragment)
 		if len(seq)<ins:
 			continue
 		gcCount = getGCCount(seq)
