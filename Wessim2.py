@@ -22,7 +22,7 @@ def main(argv):
 	arguline = " ".join(argv)
 	parser = argparse.ArgumentParser(description='Wessim2: Whole Exome Sequencing SIMulator 2 (Probe-based version)', prog='Wessim2', formatter_class=argparse.RawTextHelpFormatter)
 	group1 = parser.add_argument_group('Mandatory input files')
-	group1.add_argument('-R', metavar = 'FILE', dest='reference', required=True, help='faidx-indexed (R)eference genome FASTA file')
+	group1.add_argument('-R', metavar = 'FILE', dest='reference', required=True, help='faidx-indexed (R)eference genome FASTA file or meta description file (.meta)')
 	group1.add_argument('-P', metavar = 'FILE', dest='probe', required=True, help='(P)robe sequence FASTA file')
 	group1.add_argument('-B', metavar = 'FILE', dest='probeblat', required=True, help='(B)lat matched probe regions .PSL file')
 
