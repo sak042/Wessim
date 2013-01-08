@@ -107,6 +107,33 @@ To run Wessim, Python 2.7 or later is required. To install Python, go to <a href
 
 <p>This will generate <em>result_1.fastq.gz</em> and <em>result_2.fastq.gz</em> (paired-end mode / gzip compressed).</p>
 
+<h3>Running in metagenomic mode</h3>
+
+<p>You can use more than one genome as your template. To run Wessim in metagenomic mode, you can just write a simple description file that ends with (.meta). Use the meta description file at the place of your reference FASTA file (-R option)</p>
+
+<pre><code>
+&gt;python Wessim2.py -R reference.meta -P probe.txt.fa -B probe_match.txt.fa.psl -n 1000000 -l 76 -M model.gzip -pz -o result
+</code></pre>
+
+<p>The format of a tab-delimited .meta file is like below,</p>
+
+<pre><code>
+genome1.fasta  abundance of genome1
+genome2.fasta  abundance of genome2
+...
+genomeN.fasta  abundance of genomeN
+</code></pre>
+
+<p>For example, you can use,</p>
+
+<pre><code>
+/data/reference/ref1.fa    0.2
+/data/reference/ref2.fa    0.4
+/data/reference/ref3.fa    0.4
+</code></pre>
+
+<p>Please make sure the overall abundances add up to 1</p>
+
 <h3>Wessim Options</h3>
 
 <p>You can use '-h' for detailed help in command line.</p>
@@ -131,6 +158,8 @@ Parameters for sequencing:
   -l INT      read (l)ength (bp)
   -M FILE     GemSim (M)odel file (.gzip)
   -t INT      number of (t)hreaded subprocesses [1]
+
+
 
 Output options:
   -o FILE     (o)utput file header. ".fastq.gz" or ".fastq" will be attached automatically. Output will be splitted into two files in paired-end mode
