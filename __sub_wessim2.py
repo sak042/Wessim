@@ -24,6 +24,7 @@ def main(argv):
 	group2.add_argument('-d', metavar = 'INT', type=int, dest='fragsd', required=False, help='standard (d)eviation of fragment size [50]', default=50)
 	group2.add_argument('-m', metavar = 'INT', type=int, dest='fragmin', required=False, help='(m)inimum fragment length [read_length + 20 for single-end, 2*read_length + 20 for paired-end]')
 	group2.add_argument('-y', metavar = 'PERCENT',type=int, dest='bind', required=False, help='minimum required fraction of probe match to be h(y)bridized [50]', default=50) 
+	group2.add_argument('-w', metavar = 'INT', type=int, dest='weight', required=False, help='penalty (w)eight for indel in the hybridization [2]', default=2)
 	
 	group3 = parser.add_argument_group('Parameters for sequencing')
 	group3.add_argument('-p', action='store_true', help='generate paired-end reads [single]')
@@ -54,6 +55,7 @@ def main(argv):
 	isd = args.fragsd
 	imin = args.fragmin
 	bind = args.bind
+	weight = args.weight
 	subid = args.processid
 
 	paired = args.p
@@ -125,11 +127,20 @@ def main(argv):
 			first = True
 			totalseq += 1
 			continue
+		qgapcount = int(values[4])
+		qgapsize = int(values[5])
+		tgapcount = int(values[6])
+		tgapsize = int(values[7])
 		pslid = values[9]
-		pslscore = values[0]
+		pslscore = int(values[0])
 		pslchrom = values[13]
 		pslstart = values[15]
 		pslend= values[16]
+		if qgapcount!=0 or tgapcount!=0:
+			pslscore = pslscore - qgapcount * (weight - 1) - qgapscore * (weight - 1)
+		if qgapsize > 2 or tgapsize > 2:
+			line2 = f2.readline()
+			continue
 		if not seqid==pslid:
 			line1 = f1.readline()
 			line1 = f1.readline()
