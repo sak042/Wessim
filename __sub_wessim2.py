@@ -236,7 +236,7 @@ def main(argv):
 
 	mvnTable = readmvnTable()
 	
-	gcVector = getFragmentUniform(fref, matchkeys, matchdic, isize, 1000, bind, metamode)
+	gcVector = getFragmentUniform(fref, matchkeys, matchdic, isize, 1000, bind)
 #	print gcVector
 #	u1, u2, newSD, m1, m2 = generateMatrices(isd, isize, gcVector)
 	gcSD = numpy.std(gcVector)
@@ -344,7 +344,7 @@ def getFragment(matchdic, key, mu, sigma, lower, bind):
 	pickedfragment = pickFragment(pickedproberegion, ins, bind)	
 	return pickedfragment
 
-def getFragmentUniform(fref, matchkeys, matchdic, mu, total, bind, metamode):
+def getFragmentUniform(fref, matchkeys, matchdic, mu, total, bind):
 	result = []
 	ins = mu
 	i = 0
@@ -359,10 +359,7 @@ def getFragmentUniform(fref, matchkeys, matchdic, mu, total, bind, metamode):
 		fragment_end = int(pickedfragment[2])
 		if fragment_start < 0:
 			continue
-		if metamode == True:
-			seq = getSequenceMeta(frefs, metap, pickedfragment)
-		else:
-			seq = getSequence(fref, pickedfragment)
+		seq = getSequence(fref, pickedfragment)
 		if len(seq)<ins:
 			continue
 		gcCount = getGCCount(seq)
