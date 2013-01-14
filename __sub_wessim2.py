@@ -95,7 +95,7 @@ def main(argv):
 			genomep = float(values[1])
 			totalp += genomep
 			frefs.append(fref)
-			metap.append(genomep)
+			metap.append(totalp)
 			metaline = metain.readline()
 		metain.close()
 	wread = None
@@ -333,6 +333,7 @@ def getSequenceMeta(refs, metap, fragment):
 	end = int(fragment[2])
 	r = random.random()
 	pos = bisect.bisect_left(metap, r)
+#	print metap, r, pos
 	ref = refs[pos]
 	seq = ref.fetch(chrom, start, end)
 	return seq
