@@ -31,7 +31,8 @@ def main(argv):
 	group2.add_argument('-d', metavar = 'INT', type=int, dest='fragsd', required=False, help='standard (d)eviation of fragment size [50]', default=50)
 	group2.add_argument('-m', metavar = 'INT', type=int, dest='fragmin', required=False, help='(m)inimum fragment length [read_length + 20]')
 	group2.add_argument('-y', metavar = 'PERCENT',type=int, dest='bind', required=False, help='minimum required fraction of probe match to be h(y)bridized [50]', default=50) 
-	
+	group2.add_argument('-w', metavar = 'INT', type=int, dest='weight', required=False, help='penalty (w)eight for indel in the hybridization [2]', default=2)
+
 	group3 = parser.add_argument_group('Parameters for sequencing')
 	group3.add_argument('-p', action='store_true', help='generate paired-end reads [single]')
 	group3.add_argument('-n', metavar = 'INT', type=int, dest='readnumber', required=True, help='total (n)umber of reads')	

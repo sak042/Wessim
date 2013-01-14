@@ -359,7 +359,7 @@ def getFragmentUniform(fref, matchkeys, matchdic, mu, total, bind):
 		fragment_end = int(pickedfragment[2])
 		if fragment_start < 0:
 			continue
-		if metamode = True:
+		if metamode == True:
 			seq = getSequenceMeta(frefs, metap, pickedfragment)
 		else:
 			seq = getSequence(fref, pickedfragment)
