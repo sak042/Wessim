@@ -151,6 +151,7 @@ Parameters for exome capture:
   -d INT      standard (d)eviation of fragment size [50]
   -m INT      (m)inimum fragment length [read_length + 20]
   -x INT      slack margin of the given boundaries [0] (only for Wessim1)
+  -w INT      penalty (w)eight for indel in the hybridization [2] (only for Wessim2)
 
 Parameters for sequencing:
   -p          generate paired-end reads [single]
@@ -158,8 +159,6 @@ Parameters for sequencing:
   -l INT      read (l)ength (bp)
   -M FILE     GemSim (M)odel file (.gzip)
   -t INT      number of (t)hreaded subprocesses [1]
-
-
 
 Output options:
   -o FILE     (o)utput file header. ".fastq.gz" or ".fastq" will be attached automatically. Output will be splitted into two files in paired-end mode
