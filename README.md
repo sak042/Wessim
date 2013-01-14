@@ -1,10 +1,3 @@
-Wessim
-=======
-
-Wessim: A targeted resequencing (exome sequencing) simulator
-
-For a manual for installation, preparation and usage, please go to http://sak042.github.com/Wessim/
-
 ### Introduction
 **Wessim** is a simulator for a targeted resequencing as generally known as exome sequencing. Wessim basically generates a set of *artificial* DNA fragments for next generation sequencing (NGS) read simulation. In the targeted resequencing, we constraint the genomic regions that are used to generated DNA fragments to be only a part of the entire genome; they are usually exons and/or a few introns and untranslated regions (UTRs).
 
@@ -16,7 +9,7 @@ To run Wessim, Python 2.7 or later is required. To install Python, go to http://
 The following programs are required to run Wessim or to prepare input files:
 * **pysam** library: go to http://code.google.com/p/pysam/ to install pysam
 * **numpy** library: go to http://numpy.scipy.org/ to install numpy
-* **gfServer** and **gfClient**: In probe hybridization mode, Wessim runs more than 100,000 queries again the reference genome. This essentially requires a local blat server. gfServer and gfClient are pre-compiled programs for establishing private blat server on your computer. go to http://hgdownload.cse.ucsc.edu/admin/exe/ to download gfServer and gfClient (and set your local path to access the two programs anywhere). For more details about the tools, please refer to http://genome.ucsc.edu/FAQ/FAQblat.html#blat5
+* **gfServer** and **gfClient**: In probe hybridization mode, Wessim runs more than 100,000 queries against the reference genome. This essentially requires a local blat server. gfServer and gfClient are pre-compiled programs for establishing private blat server on your computer. go to http://hgdownload.cse.ucsc.edu/admin/exe/ to download gfServer and gfClient (and set your local path to access the two programs anywhere). For more details about the tools, please refer to http://genome.ucsc.edu/FAQ/FAQblat.html#blat5
 * **faToTwoBit**: go to http://hgdownload.cse.ucsc.edu/admin/exe/ and download faToTwoBit. This is required to convert your FASTA file to .2bit 
 * **samtools**: samtools is needed to index your sample genome FASTA file (samtools faidx).
 * **GemSim** error models: Wessim uses GemSim's empirical error models for NGS read generation. Go to GemSim's project page (http://sourceforge.net/projects/gemsim/) to download GemSim. You will find several model files (e.g. ill100v4_p.gzip) under 'models' directory. Save them and remember their location.
@@ -28,11 +21,13 @@ Wessim requires two major inputs. One is the sample genome sequence, and the oth
 >samtools faidx ref.fa
 >faToTwoBit ref.fa ref.2bit
 </code></pre>
-* **Target region information**: Target regions can be specified by two different ways. 
+* **Target region information**: Target regions can be specified by two different ways.
     1. **Ideal targets**: In ideal target mode, you will provide a list of genomic coordinates in a BED  file (e.g. chr1   798833 799125). Ideal targets of major exome capture platforms are freely available from vendor's website. For Agilent's SureSelect platforms, go to https://earray.chem.agilent.com/suredesign/ . You must register at their site. After logging in, go to Find Designs and select Agilent Catalog at the menu tab. You will be able to download all information of currently available platforms including ideal target BED files and probe sequence text files.   For NimbleGen's SeqCap go to http://www.nimblegen.com/products/seqcap/index.html and find BED files under Design and Annotation Files. 
     2. **Probe sequences**: Probe sequences are available for SureSelect platforms in the SureDesign homepage (https://earray.chem.agilent.com/suredesign/) (see above). Usually those files are named "[platform]_probe.txt"
 
 ### Running Wessim
+There are two main scripts in the package - Wessim1.py and Wessim2.py. You will use Wessim1 if you are using a BED file for target regions (ideal target approach). However,  it is highly recommended to use Wessim2 (probe hybridization approach) when the probe sequence is available; it is much more realistic and recovers the statistics of real data. Two other scripts that start with 'Prep' are used to preparing Wessim2 inputs. You can ignore remaining scripts that start with '__sub'; main Wessim programs will execute these sub scripts automatically.
+
 The basic synopsis of Wessim1 is like below:
 <pre><code>
 # Run Wessim1 in ideal target mode
@@ -53,6 +48,27 @@ For Wessim2:
 </code></pre>
 This will generate *result_1.fastq.gz* and *result_2.fastq.gz* (paired-end mode / gzip compressed).
 
+### Running in metagenomic mode
+You can use more than one genome as your template. To run Wessim in metagenomic mode, you can just write a simple description file that ends with (.meta). Use the meta description file at the place of your reference FASTA file (-R option)
+<pre><code>
+>python Wessim2.py -R reference.meta -P probe.txt.fa -B probe_match.txt.fa.psl -n 1000000 -l 76 -M model.gzip -pz -o result
+</code></pre>
+
+The format of a tab-delimited .meta file is like below,
+<pre><code>
+genome1.fasta <tab> abundance of genome1
+genome2.fasta <tab> abundance of genome2
+...
+genomeN.fasta <tab> abundance of genomeN
+</code></pre>
+For example, you can use,
+<pre><code>
+/data/reference/ref1.fa    0.2
+/data/reference/ref2.fa    0.4
+/data/reference/ref3.fa    0.4
+</code></pre>
+Please make sure the overall abundances add up to 1
+
 ### Wessim Options
 You can use '-h' for detailed help in command line.
 
@@ -70,6 +86,7 @@ Parameters for exome capture:
   -d INT      standard (d)eviation of fragment size [50]
   -m INT      (m)inimum fragment length [read_length + 20]
   -x INT      slack margin of the given boundaries [0] (only for Wessim1)
+  -w INT      penalty (w)eight for indel in the hybridization [2] (only for Wessim2)
 
 Parameters for sequencing:
   -p          generate paired-end reads [single]
@@ -86,5 +103,5 @@ Output options:
 ```
 
 ### Support or Contact
-For GitHub use, check out the documentation at http://help.github.com/pages or contact support@github.com and we’ll help you sort it out.
+For GitHub use, check out the documentation at http://help.github.com/pages or contact support@github.com and well help you sort it out.
 
