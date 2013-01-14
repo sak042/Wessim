@@ -332,7 +332,7 @@ def getSequenceMeta(refs, metap, fragment):
 	start = int(fragment[1])
 	end = int(fragment[2])
 	r = random.random()
-	pos = bisect.bisect_left(metap, r)
+	pos = bisect.bisect_left(metap, r) - 1
 #	print metap, r, pos
 	ref = refs[pos]
 	seq = ref.fetch(chrom, start, end)
