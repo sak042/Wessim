@@ -137,7 +137,7 @@ def main(argv):
 		pslstart = values[15]
 		pslend= values[16]
 		if qgapcount!=0 or tgapcount!=0:
-			pslscore = pslscore - qgapcount * (weight - 1) - qgapscore * (weight - 1)
+			pslscore = pslscore - qgapcount * (weight - 1) - tgapcount * (weight - 1)
 		if qgapsize > 2 or tgapsize > 2:
 			line2 = f2.readline()
 			continue
