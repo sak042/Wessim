@@ -57,7 +57,11 @@ To run Wessim, Python 2.7 or later is required. To install Python, go to <a href
 <strong>samtools</strong>: samtools is needed to index your sample genome FASTA file (samtools faidx).</li>
 <li>
 <strong>GemSim</strong> error models: Wessim uses GemSim's empirical error models for NGS read generation. Go to GemSim's project page (<a href="http://sourceforge.net/projects/gemsim/">http://sourceforge.net/projects/gemsim/</a>) to download GemSim. You will find several model files (e.g. ill100v4_p.gzip) under 'models' directory. Save them and remember their location.</li>
-</ul><h3>Preparing Input Files</h3>
+</ul><blockquote>
+<p><strong>NOTE</strong>: When using GemSim model, be aware that the model type matches to the read type. For example, use need to input the paired-end model (ends with _p.gzip) if you are generating paired-end read (given by '-p' option in Wessim. Single-end models (ends with _s.gzip) are used without '-p' option.</p>
+</blockquote>
+
+<h3>Preparing Input Files</h3>
 
 <p>Wessim requires two major inputs. One is the sample genome sequence, and the other is the target region information.</p>
 
