@@ -11,8 +11,8 @@ def main(argv):
 	group1.add_argument('-R', metavar = 'FILE', dest = 'reference', required=True, help = '2bit formatted reference file')
 	group1.add_argument('-P', metavar = 'FILE', dest = 'probe', required=True, help = 'FASTA format probe sequence file generated from Prep_Probe2Fa')
 	group2 = parser.add_argument_group('Search options')
-	group2.add_argument('-i', metavar = 'INT', dest = 'minidentity', required=False, help = 'Min-identity for blat match [90]', default=90)
-	group2.add_argument('-s', metavar = 'INT', dest = 'minscore', required=False, help = 'Min-Score for blat match [100]', default=100)
+	group2.add_argument('-i', metavar = 'INT', dest = 'minidentity', required=False, help = 'Min-identity for blat match [90]', default="90")
+	group2.add_argument('-s', metavar = 'INT', dest = 'minscore', required=False, help = 'Min-Score for blat match [100]', default="100")
 	group3 = parser.add_argument_group('Output options')
 	group3.add_argument('-o', metavar = 'FILE', dest = 'outfile', required=False, help = 'Output file name [Probe_File_Name.psl]', default='')
 
