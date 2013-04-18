@@ -42,7 +42,7 @@ For Wessim2:
 # Establish your local blat server
 >gfServer start -canStop localhost 6666 ref.2bit
 # Run blat search to generate the match list
->python Prep_BlatSearch.py ref.2bit probe.txt.fa probe.txt.fa.psl
+>python Prep_BlatSearch.py -R ref.2bit -P probe.txt.fa -o probe.txt.fa.psl
 # Run Wessim2 in probe hybridization mode.
 >python Wessim2.py -R ref.fa -P probe.txt.fa -B probe_match.txt.fa.psl -n 1000000 -l 76 -M model.gzip -pz -o result
 </code></pre>
