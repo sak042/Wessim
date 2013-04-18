@@ -246,6 +246,7 @@ def main(argv):
 	count = 0
 	i = readstart
 	seq = ""
+	seqgenome = "g1"
 	while i < readend+1:
 		key = pickonekey(matchkeys)
 		fragment = getFragment(matchdic, key, isize, newSD, imin, bind)		
@@ -256,7 +257,7 @@ def main(argv):
 		if fragment_start < 0:
 			continue
 		if metamode == True:
-			seq = getSequenceMeta(frefs, metap, fragment)
+			seq, seqgenome = getSequenceMeta(frefs, metap, fragment)
 		else:
 			seq = getSequence(fref, fragment)
 		if len(seq)<imin:
@@ -272,7 +273,7 @@ def main(argv):
 			read1,pos,dir,quals1=readGen1(ref,refLen,readLen,gens(),readLen,mx1,insDict,delDict,gQList,bQList,iQList,qualbase)
 			if read1==None or quals1==None:
 				continue
-			head1='@'+'r'+str(i)+'_from_' + fragment_chrom + "_" + str(fragment_start + pos + 1) + "_" + dirtag[dir]
+			head1='@'+'r'+str(i)+'_from_' + seqgenome + ";" + fragment_chrom + "_" + str(fragment_start + pos + 1) + "_" + dirtag[dir]
 		else:
 			val=random.random()
 			ln1=RL()
@@ -291,8 +292,8 @@ def main(argv):
 				read1='N'*ln1
 				quals1=chr(0+qualbase)*ln1
 				p1='*'
-			head1='@'+'r'+str(i)+'_from_'+ p1 + ":" + p2 + "/1"
-			head2='@'+'r'+str(i)+'_from_'+ p1 + ":" + p2 + "/2"
+			head1='@'+'r'+str(i)+'_from_'+ seqgenome + ";" + p1 + ":" + p2 + "/1"
+			head2='@'+'r'+str(i)+'_from_'+ seqgenome + ";" + p1 + ":" + p2 + "/2"
 		wread.write(head1 + '\n')
 		wread.write(read1.upper()+'\n')
 		wread.write('+\n')
@@ -336,7 +337,7 @@ def getSequenceMeta(refs, metap, fragment):
 #	print metap, r, pos
 	ref = refs[pos]
 	seq = ref.fetch(chrom, start, end)
-	return seq
+	return seq, "g" + str(pos+1)
 
 def getFragment(matchdic, key, mu, sigma, lower, bind):
 	ins = getInsertLength(mu, sigma, lower)
