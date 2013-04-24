@@ -102,7 +102,7 @@ To run Wessim, Python 2.7 or later is required. To install Python, go to <a href
 # Generate a FASTA file of probe sequence
 &gt;python Prep_Probe2Fa.py probe.txt (this generates probe.txt.fa)
 # Establish your local blat server
-&gt;gfServer start -canStop localhost 6666 ref.2bit (this will consume one whole thread, you need to use a separated thread to continue the following steps)
+&gt;gfServer start -canStop localhost 6666 /ABSOLUTE/PATH/ref.2bit (You should provide the absolute path to the reference file. The gfServer will consume one whole thread, you need to use a separated thread to continue the following steps)
 # Run blat search to generate the match list
 &gt;python Prep_BlatSearch.py -R ref.2bit -P probe.txt.fa -o probe.txt.fa.psl (Note that the path to ref.2bit is not based on your local machine. It should be used without path, because the gfServer has it in its root)
 # Run Wessim2 in probe hybridization mode.
