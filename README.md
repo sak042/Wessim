@@ -40,7 +40,7 @@ For Wessim2:
 # Generate a FASTA file of probe sequence
 >python Prep_Probe2Fa.py probe.txt (this generates probe.txt.fa)
 # Establish your local blat server
->gfServer start -canStop localhost 6666 ref.2bit (this will consume one whole thread, you need to use a separated thread to continue the following steps)
+>gfServer start -canStop localhost 6666 /ABSOLUTE/PATH/ref.2bit (You need to provide the abosolute path of the reference file. gfServer will consume one whole thread, you need to use a separated thread to continue the following steps)
 # Run blat search to generate the match list
 >python Prep_BlatSearch.py -R ref.2bit -P probe.txt.fa -o probe.txt.fa.psl (Note that the path to ref.2bit is not based on your local machine. It should be used without path, because the gfServer has it in its root)
 # Run Wessim2 in probe hybridization mode.
